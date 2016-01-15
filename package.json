@@ -1,0 +1,25 @@
+{
+  "name": "awaitify",
+  "version": "0.9.8",
+  "description": "A simple wrapper for function generators",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fixjs/awaitify.git"
+  },
+  "engines" : {
+    "node" : ">=4.2.1"
+  },
+  "keywords": [
+    "await",
+    "async",
+    "generators",
+    "promises"
+  ],
+  "author": "Mehran Hatami <mehranhatamie@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/fixjs/awaitify/issues"
+  },
+  "homepage": "https://github.com/fixjs/awaitify#readme"
+}
