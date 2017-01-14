@@ -15,3 +15,36 @@ awaitify(function*(){
 ```
 
 which allows you await on a promise using `yield` keyword also allows the pass generator functions to a promise chain.
+
+# awaitify.cb
+
+```javascript
+var awaitify = require('awaitify');
+var fs = require('fs');
+awaitify.cb(function(cb){
+  return fs.readFile('/any/file/path', 'utf8', cb);
+})
+.then((data)=>{
+  console.log(data);
+})
+.catch((err) => {
+  console.log(err, err.stack);
+})
+```
+
+# awaitify.async
+
+```javascript
+var awaitify = require('awaitify');
+var fs = require('fs');
+var _fs={
+  readFile: awaitify.async(fs.readFile, fs)
+};
+_fs.readFile('/any/file/path', 'utf8')
+  .then((data)=>{
+    console.log(data);
+  })
+  .catch((err) => {
+    console.log(err, err.stack);
+  });
+```
