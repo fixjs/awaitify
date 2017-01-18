@@ -1,11 +1,14 @@
 {
   "name": "awaitify",
-  "version": "0.9.9-beta",
+  "version": "0.9.9",
   "description": "A simple wrapper for function generators",
   "main": "index.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/fixjs/awaitify.git"
+  },
+  "scripts": {
+    "test": "mocha"
   },
   "engines": {
     "node": ">=4.2.1"
@@ -24,5 +27,9 @@
   "homepage": "https://github.com/fixjs/awaitify#readme",
   "dependencies": {
     "lodash": "^4.17.4"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^3.2.0"
   }
 }
