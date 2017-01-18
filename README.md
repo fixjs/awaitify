@@ -4,22 +4,41 @@
 [![Download stats](https://img.shields.io/npm/dm/awaitify.svg)](https://www.npmjs.com/package/awaitify)
 
 
-A simple wrapper for function generators. You could wrap the function generator inside this function like:
+A lightweight library to simplify asynchronous operations using function generators and `yield` keyword, which is an alternative for `Async/Await` keywords without having to use any Transpiler like babel. You could wrap the function generator inside this function like this:
 
 ```javascript
 var awaitify = require('awaitify');
 
-awaitify(function*(){
+var getUsers = awaitify(function*(){
   // a xhr request to load users list
   var users = yield jQuery.get('/api/users');
-  console.log(users);
-}).then(function *(){
-  var user = yield jQuery.get('/api/users/5698d6a5246af3c847be3000');
-  console.log(user);
-})
+  return users;
+});
+
+getUsers()
+  .then((users)=>{
+    console.log(users);
+  });
+
+// or
+
+var users = yield getUsers();
+console.log(users);
 ```
 
-which allows you await on a promise using `yield` keyword also allows the pass generator functions to a promise chain.
+which allows you await on a promise using `yield` keyword.
+
+# promise.then(function*(){})
+This library also allows the pass generator functions to the promise chain implemented by this module:
+
+```javascript
+getUsers()
+  .then(function *(users){
+    console.log(users);
+    var user = yield jQuery.get('/api/users/5698d6a5246af3c847be3000');
+    console.log(user);
+  });
+```
 
 # awaitify.cb
 
