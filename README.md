@@ -1,4 +1,6 @@
 # awaitify
+[![Code Climate](https://codeclimate.com/github/fixjs/awaitify/badges/gpa.svg)](https://codeclimate.com/github/fixjs/awaitify)
+[![Download stats](https://img.shields.io/npm/dm/awaitify.svg)](https://www.npmjs.com/package/awaitify)
 A simple wrapper for function generators. You could wrap the function generator inside this function like:
 
 ```javascript
