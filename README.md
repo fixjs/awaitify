@@ -45,15 +45,25 @@ getUsers()
 ```javascript
 var awaitify = require('awaitify');
 var fs = require('fs');
-awaitify.cb(function(cb){
-  return fs.readFile('/any/file/path', 'utf8', cb);
-})
-.then((data)=>{
-  console.log(data);
-})
-.catch((err) => {
-  console.log(err, err.stack);
-})
+var readFile = path => awaitify.cb(cb => fs.readFile(path, 'utf8', cb)));
+
+var main = awaitify(function*(){
+  var data;
+  try{
+    data = yield readFile('/any/file/path');
+  } catch (err) {
+    console.log(err, err.stack);
+  }
+  return data;
+});
+
+main();
+
+// or
+
+readFile('/any/file/path')
+  .then(data => console.log(data))
+  .catch(err => console.log(err, err.stack))
 ```
 
 # awaitify.async
