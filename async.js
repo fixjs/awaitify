@@ -1,9 +1,9 @@
-var _ = require('lodash');
-var cb = require('./cb');
+const _ = require('lodash');
+const cb = require('./cb');
 
 module.exports = (fn, context) => {
   return function(){
-    var args = _.slice(arguments);
+    const args = _.slice(arguments);
     return cb((cb) => {
       args.push(cb);
       return fn.apply(context, args);

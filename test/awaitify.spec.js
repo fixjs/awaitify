@@ -1,13 +1,13 @@
-var assert = require('assert');
-var fs = require('fs');
-var path = require('path');
-var chai = require('chai');
-var awaitify = require('../index');
-var expect = chai.expect;
+const assert = require('assert');
+const fs = require('fs');
+const path = require('path');
+const chai = require('chai');
+const awaitify = require('../index');
+const expect = chai.expect;
 
 describe('awaitify', () => {
   describe('#()', () => {
-    var fn;
+    let fn;
     beforeEach(() => {
       fn = awaitify(function* () {
         var value = yield Promise.resolve('Sample Data');

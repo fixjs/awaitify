@@ -1,6 +1,6 @@
 {
   "name": "awaitify",
-  "version": "0.9.9",
+  "version": "1.0.0",
   "description": "A simple wrapper for function generators",
   "main": "index.js",
   "repository": {

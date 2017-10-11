@@ -1,9 +1,6 @@
-var
-  objToString = Object.prototype.toString,
-  NativePromise = global.Promise,
-  MAX_SAFE_INTEGER = Math.pow(2, 53) - 1,
-  genCache = new Map(),
-  GeneratorFunction;
+const NativePromise = global.Promise;
+const genCache = new Map();
+let GeneratorFunction;
 
 /* jshint ignore:start */
 GeneratorFunction = Object.getPrototypeOf(function* () {}).constructor;
@@ -23,7 +20,7 @@ function isGenerator(fn) {
 function wrap(promise) {
   return {
     done: function (onFulfilled, onRejected) {
-      var self = arguments.length ? promise.then.apply(promise, arguments) : promise;
+      const self = arguments.length ? promise.then.apply(promise, arguments) : promise;
       self.then(null, function (err) {
         setTimeout(function () {
           throw err;
@@ -36,8 +33,8 @@ function wrap(promise) {
 // this function has originally been implemented by Forbes Lindesay
 // you could find the original implementation in this link https://www.promisejs.org/generators/
 function async(makeGenerator) {
-  return function () {
-    var generator = makeGenerator.apply(this, arguments);
+  return () => {
+    const generator = makeGenerator.apply(this, arguments);
 
     function handle(result) {
       // result => { done: [Boolean], value: [Object] }
@@ -63,7 +60,7 @@ function async(makeGenerator) {
 }
 
 function awaitify(makeGenerator) {
-  var asyncGenerator;
+  let asyncGenerator;
   if(genCache.has(makeGenerator)) {
     return genCache.get(makeGenerator);
   }

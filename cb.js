@@ -1,17 +1,11 @@
-var _ = require('lodash');
+const _ = require('lodash');
 
-module.exports = (fn) => {
-  if(!_.isFunction(fn)) {
-    return Promise.reject(Error('Invalid callback function'));
-  }
-  return new Promise((resolve, reject) => {
-    var callback = (err, data) => {
-      if(err) {
-        console.error(err, err.stack);
+module.exports = fn => (!_.isFunction(fn) ?
+    (Promise.reject(Error('Invalid callback function'))) :
+    (new Promise((resolve, reject) => fn((err, data) => {
+      if (err) {
+        console.error(err, _.get(err, 'stack'));
         return reject(err);
       }
       resolve(data);
-    };
-    fn(callback);
-  });
-};
+    }))));
