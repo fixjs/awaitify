@@ -28,6 +28,9 @@ function wrap(promise) {
 GeneratorFunction.prototype.awaitify = function () {
   return awaitify(this);
 };
+GeneratorFunction.prototype.exec = function () {
+  return awaitify(this).apply(undefined, arguments);
+};
 
 function makeAsync(fn) {
   return isGenerator(fn) ? fn.awaitify() : fn;
