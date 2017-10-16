@@ -30,6 +30,7 @@
   },
   "devDependencies": {
     "chai": "^3.5.0",
+    "gen-run": "^0.1.2",
     "mocha": "^3.2.0"
   }
 }
