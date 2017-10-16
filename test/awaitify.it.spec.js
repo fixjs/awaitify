@@ -4,7 +4,7 @@ const mocha = require('mocha');
 const awaitify = require('../index');
 const expect = chai.expect;
 const it = awaitify.it(mocha.it);
-const functions = require('./awaitify.test');
+const functions = require('./awaitify-gen-run.test');
 
 describe('awaitify.it', () => {
   describe('#()', () => {

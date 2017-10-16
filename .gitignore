@@ -34,5 +34,3 @@ node_modules
 .node_repl_history
 
 .idea
-
-test/awaitify.test.js
