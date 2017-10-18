@@ -4,18 +4,8 @@ const path = require('path');
 const chai = require('chai');
 const awaitify = require('../index');
 const expect = chai.expect;
-
-function delayResolved(milliseconds, callback, value) {
-  setTimeout(() => {
-    callback(null, value);
-  }, milliseconds);
-}
-
-function delayRejected(milliseconds, callback) {
-  setTimeout(() => {
-    callback(new Error('A sample error!'));
-  }, milliseconds);
-}
+const delayResolved = require('./sample-asyns').delayResolved;
+const delayRejected = require('./sample-asyns').delayRejected;
 
 describe('awaitify', () => {
   describe('#cb()', () => {
