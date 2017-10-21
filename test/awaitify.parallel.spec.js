@@ -14,7 +14,7 @@ describe('awaitify', () => {
           console.log(`"first" gets resolved to ${value}`);
           return value;
         },
-        second: yield awaitify.cb(cb => delayResolved(100, cb, 'SecondResolvedValue')),
+        second: awaitify.cb(cb => delayResolved(100, cb, 'SecondResolvedValue')),
       });
     }
 
