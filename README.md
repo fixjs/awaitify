@@ -1,4 +1,4 @@
-# awaitify v1.0.2
+# awaitify v1.0.3
 [ ![Codeship Status for fixjs/awaitify](https://app.codeship.com/projects/1618ee20-bfdc-0134-54f6-02461f4386cc/status?branch=master)](https://app.codeship.com/projects/196778)
 [![Code Climate](https://codeclimate.com/github/fixjs/awaitify/badges/gpa.svg)](https://codeclimate.com/github/fixjs/awaitify)
 [![Download stats](https://img.shields.io/npm/dm/awaitify.svg)](https://www.npmjs.com/package/awaitify)
@@ -27,6 +27,33 @@ console.log(users);
 ```
 
 which allows you await on a promise using `yield` keyword.
+
+# awaitify.map([], function* (){})
+```javascript
+const mapList = function* (){
+  const mappedUsersInfoList = awaitify.map(usersList, function* (userObject){
+    const userInfo = yield loadUserInfo(userObject._id);
+    userInfo.baseData = userObject;
+    return userInfo;
+  });
+  // You can have access to the new list of usersInfo
+}.awaitify();
+```
+
+# awaitify.parallel({})
+```javascript
+const loadData = function* (){
+  const { users, config } = awaitify.parallel({
+    users: function* () {
+      const users = yield getUsers();
+      console.log(users);
+      return users;
+    },
+    config: awaitify.fs.loadConfigFile('./package.json')
+  });
+  // You can have access to both users and config variable here
+}.awaitify();
+```
 
 # promise.then(function*(){})
 This library also allows the pass generator functions to the promise chain implemented by this module:
@@ -64,21 +91,4 @@ main();
 readFile('/any/file/path')
   .then(data => console.log(data))
   .catch(err => console.log(err, err.stack))
-```
-
-# awaitify.async
-
-```javascript
-var awaitify = require('awaitify');
-var fs = require('fs');
-var _fs={
-  readFile: awaitify.async(fs.readFile, fs)
-};
-_fs.readFile('/any/file/path', 'utf8')
-  .then((data)=>{
-    console.log(data);
-  })
-  .catch((err) => {
-    console.log(err, err.stack);
-  });
 ```
