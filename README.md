@@ -1,4 +1,4 @@
-# awaitify v1.0.3
+# awaitify v1.0.4
 [ ![Codeship Status for fixjs/awaitify](https://app.codeship.com/projects/1618ee20-bfdc-0134-54f6-02461f4386cc/status?branch=master)](https://app.codeship.com/projects/196778)
 [![Code Climate](https://codeclimate.com/github/fixjs/awaitify/badges/gpa.svg)](https://codeclimate.com/github/fixjs/awaitify)
 [![Download stats](https://img.shields.io/npm/dm/awaitify.svg)](https://www.npmjs.com/package/awaitify)
@@ -91,4 +91,27 @@ main();
 readFile('/any/file/path')
   .then(data => console.log(data))
   .catch(err => console.log(err, err.stack))
+```
+
+# awaitify.module
+
+```javascript
+const SampleModuleV1 = awaitify.module({
+  createSomething: function*(){
+    let result = yield Promise.resolve('Something');
+    result += ' V1';
+    return result;
+  },
+});
+
+const SampleModuleV2 = awaitify.module(SampleModuleV1 ,{
+  *createSomething(){
+    let result = yield SampleModuleV1.createSomething();
+    result += ', V2';
+    return result;
+  },
+});
+
+const result = yield SampleModuleV2.createSomething();
+console.log(result); // "Something V1, V2"
 ```
