@@ -28,10 +28,10 @@ console.log(users);
 
 which allows you await on a promise using `yield` keyword.
 
-# awaitify.map([], function* (){})
+# yield awaitify.map([], function* (){})
 ```javascript
 const mapList = function* (){
-  const mappedUsersInfoList = awaitify.map(usersList, function* (userObject){
+  const mappedUsersInfoList = yield awaitify.map(usersList, function* (userObject){
     const userInfo = yield loadUserInfo(userObject._id);
     userInfo.baseData = userObject;
     return userInfo;
@@ -43,7 +43,7 @@ const mapList = function* (){
 # awaitify.parallel({})
 ```javascript
 const loadData = function* (){
-  const { users, config } = awaitify.parallel({
+  const { users, config } = yield awaitify.parallel({
     users: function* () {
       const users = yield getUsers();
       console.log(users);
@@ -97,7 +97,7 @@ readFile('/any/file/path')
 
 ```javascript
 const SampleModuleV1 = awaitify.module({
-  createSomething: function*(){
+  *createSomething(){
     let result = yield Promise.resolve('Something');
     result += ' V1';
     return result;
