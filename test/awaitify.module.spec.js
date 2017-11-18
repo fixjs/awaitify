@@ -4,8 +4,16 @@ const expect = chai.expect;
 const it = awaitify.it(global.it);
 const { SampleModuleV1, SampleModuleV2 } = require('./module-samples');
 
+const sampleModule = {
+  *doSomething(){
+    let result = yield Promise.resolve('did something');
+    result += '!';
+    return result;
+  }
+};
+
 describe('awaitify', () => {
-  describe('#module()', () => {
+  describe('#module()', () => {expect(SampleModuleV2.helloWorld()).to.equal('helloWorld v1');
     let resultV1;
     let resultV2;
 
@@ -43,6 +51,14 @@ describe('awaitify', () => {
       expect(SampleModuleV1.helloWorld()).to.equal('helloWorld v1');
       expect(SampleModuleV2.helloWorld()).to.equal('helloWorld v1');
       expect(SampleModuleV2.helloWorldV2()).to.equal('helloWorld v2');
+    });
+
+    it('should override the actual function with a transformed function', function* () {
+      expect(awaitify.isGenerator(sampleModule.doSomething)).to.be.true;
+      awaitify.module(sampleModule);
+      expect(awaitify.isGenerator(sampleModule.doSomething)).to.be.false;
+      const result = yield sampleModule.doSomething();
+      expect(result).to.equal('did something!');
     });
   });
 });
