@@ -1,7 +1,7 @@
 require('./lib/core');
 const awaitify = require('./lib/awaitify');
 
-awaitify.Promise = Promise;
+awaitify.Promise = require('./lib/promise');
 awaitify.cb = require('./lib/cb');
 awaitify.map = require('./lib/map');
 awaitify.parallel = require('./lib/parallel');
