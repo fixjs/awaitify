@@ -23,6 +23,25 @@ const SampleModuleV2 = awaitify.module(SampleModuleV1 ,{
     return result;
   }
 });
+
+const SampleModuleV3 = awaitify.module(SampleModuleV1, {
+  *createSomething() {
+    let result = yield SampleModuleV1.createSomething();
+    result += ', V3';
+    return result;
+  }
+}, true);
+
+const SampleModuleV4 = awaitify.module({
+  helloWorld(){
+    return 'helloWorld v4';
+  },
+  *createSomething() {
+    let result = yield Promise.resolve('Something');
+    result += ' V4';
+    return result;
+  }
+}, true);
 /*
 setTimeout(function*(){
   SampleModuleV2.helloWorld();
@@ -33,4 +52,6 @@ setTimeout(function*(){
 module.exports = {
   SampleModuleV1,
   SampleModuleV2,
+  SampleModuleV3,
+  SampleModuleV4
 };

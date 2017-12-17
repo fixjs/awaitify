@@ -1,8 +1,9 @@
 const chai = require('chai');
+const isPromiseAlike = require('../lib/isPromiseAlike');
 const awaitify = require('../index');
 const expect = chai.expect;
 const it = awaitify.it(global.it);
-const { SampleModuleV1, SampleModuleV2 } = require('./module-samples');
+const { SampleModuleV1, SampleModuleV2, SampleModuleV3, SampleModuleV4 } = require('./module-samples');
 
 const sampleModule = {
   *doSomething(){
@@ -16,10 +17,14 @@ describe('awaitify', () => {
   describe('#module()', () => {expect(SampleModuleV2.helloWorld()).to.equal('helloWorld v1');
     let resultV1;
     let resultV2;
+    let resultV3;
+    let resultV4;
 
     function * sampleModules() {
       resultV1 = SampleModuleV1.createSomething();
       resultV2 = SampleModuleV2.createSomething();
+      resultV3 = SampleModuleV3.createSomething();
+      resultV4 = SampleModuleV4.createSomething();
     }
 
     beforeEach(function(done) {
@@ -30,9 +35,14 @@ describe('awaitify', () => {
         });
     });
 
-    it('an async function should return a gen-run callback', () => {
+    it('an async function should return a gen-run callback without doNotWrapInGenRun option', () => {
       expect(resultV1).to.be.a('function');
       expect(resultV2).to.be.a('function');
+    });
+
+    it('an async function should return a Promise with doNotWrapInGenRun option', () => {
+      expect(isPromiseAlike(resultV3)).to.be.true;
+      expect(isPromiseAlike(resultV4)).to.be.true;
     });
 
     it('should automatically convert a generator function to an async function #1', function* () {
@@ -47,10 +57,24 @@ describe('awaitify', () => {
       expect(result).to.equal('Something V1, V2');
     });
 
+    it('should automatically convert a generator function to an async function #3', function* () {
+      const result = yield resultV3;
+      expect(result).to.be.a('string');
+      expect(result).to.equal('Something V1, V3');
+    });
+
+    it('should automatically convert a generator function to an async function #4', function* () {
+      const result = yield resultV4;
+      expect(result).to.be.a('string');
+      expect(result).to.equal('Something V4');
+    });
+
     it('should be able to inherit values and methods from a base module', () => {
       expect(SampleModuleV1.helloWorld()).to.equal('helloWorld v1');
+      expect(SampleModuleV4.helloWorld()).to.equal('helloWorld v4');
       expect(SampleModuleV2.helloWorld()).to.equal('helloWorld v1');
       expect(SampleModuleV2.helloWorldV2()).to.equal('helloWorld v2');
+      expect(SampleModuleV3.helloWorld()).to.equal('helloWorld v1');
     });
 
     it('should override the actual function with a transformed function', function* () {
